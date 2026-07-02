@@ -1,0 +1,417 @@
+{
+  "customers": [
+    {
+      "customer_id": "CUST-1001",
+      "name": "Maria Alvarez",
+      "email": "maria.alvarez@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70011",
+          "item": "Aurora Desk Lamp",
+          "category": "home",
+          "price_usd": 68.0,
+          "purchase_date": "2026-06-18",
+          "delivered_date": "2026-06-22",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1002",
+      "name": "Derek Okafor",
+      "email": "derek.okafor@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70022",
+          "item": "Trailhead Hiking Boots",
+          "category": "apparel",
+          "price_usd": 142.5,
+          "purchase_date": "2026-05-10",
+          "delivered_date": "2026-05-14",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": [
+        {
+          "refund_id": "RFD-H-455",
+          "order_id": "ORD-68844",
+          "item": "Camp Stove",
+          "amount_usd": 65.0,
+          "refund_date": "2026-05-20",
+          "reason": "arrived damaged (photos provided)"
+        }
+      ]
+    },
+    {
+      "customer_id": "CUST-1003",
+      "name": "Priya Raman",
+      "email": "priya.raman@example.com",
+      "loyalty_tier": "gold",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70033",
+          "item": "Velvet Evening Dress (FINAL SALE)",
+          "category": "apparel",
+          "price_usd": 89.99,
+          "purchase_date": "2026-06-25",
+          "delivered_date": "2026-06-28",
+          "delivery_status": "delivered",
+          "attributes": {
+            "final_sale": true
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1004",
+      "name": "Tom Beckett",
+      "email": "tom.beckett@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70044",
+          "item": "ProAudio Mastering Suite (digital license)",
+          "category": "digital",
+          "price_usd": 199.0,
+          "purchase_date": "2026-06-29",
+          "delivered_date": "2026-06-29",
+          "delivery_status": "delivered",
+          "attributes": {
+            "digital": true,
+            "downloaded": true,
+            "download_date": "2026-06-29"
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1005",
+      "name": "Hana Yoshida",
+      "email": "hana.yoshida@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70055",
+          "item": "Language Learning Pro (digital license)",
+          "category": "digital",
+          "price_usd": 59.0,
+          "purchase_date": "2026-06-30",
+          "delivered_date": "2026-06-30",
+          "delivery_status": "delivered",
+          "attributes": {
+            "digital": true,
+            "downloaded": false
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1006",
+      "name": "Luis Herrera",
+      "email": "luis.herrera@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70066",
+          "item": "Ceramic Dinnerware Set (16pc)",
+          "category": "home",
+          "price_usd": 129.0,
+          "purchase_date": "2026-06-24",
+          "delivered_date": "2026-06-27",
+          "delivery_status": "delivered",
+          "attributes": {
+            "damage_reported": true,
+            "damage_report_date": "2026-06-28",
+            "photos_provided": true
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1007",
+      "name": "Aisha Bello",
+      "email": "aisha.bello@example.com",
+      "loyalty_tier": "gold",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70077",
+          "item": "Nimbus Running Shoes \u2014 size 8",
+          "category": "apparel",
+          "price_usd": 118.0,
+          "purchase_date": "2026-06-20",
+          "delivered_date": "2026-06-23",
+          "delivery_status": "delivered",
+          "attributes": {
+            "wrong_item_reported": true,
+            "received_item": "Nimbus Running Shoes \u2014 size 11"
+          }
+        }
+      ],
+      "refund_history": [
+        {
+          "refund_id": "RFD-H-390",
+          "order_id": "ORD-67210",
+          "item": "Yoga Mat",
+          "amount_usd": 32.0,
+          "refund_date": "2026-04-06",
+          "reason": "wrong color shipped"
+        }
+      ]
+    },
+    {
+      "customer_id": "CUST-1008",
+      "name": "Gary Lindqvist",
+      "email": "gary.lindqvist@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [
+        "serial_returner_watch"
+      ],
+      "orders": [
+        {
+          "order_id": "ORD-70088",
+          "item": "Wireless Earbuds Gen 3",
+          "category": "electronics",
+          "price_usd": 89.0,
+          "purchase_date": "2026-06-26",
+          "delivered_date": "2026-06-29",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": [
+        {
+          "refund_id": "RFD-H-311",
+          "order_id": "ORD-66102",
+          "item": "Mechanical Keyboard",
+          "amount_usd": 74.0,
+          "refund_date": "2026-02-11",
+          "reason": "changed mind"
+        },
+        {
+          "refund_id": "RFD-H-402",
+          "order_id": "ORD-67450",
+          "item": "Smart Scale",
+          "amount_usd": 55.0,
+          "refund_date": "2026-04-12",
+          "reason": "item defective (no photos provided)"
+        },
+        {
+          "refund_id": "RFD-H-431",
+          "order_id": "ORD-68011",
+          "item": "Rain Jacket",
+          "amount_usd": 89.0,
+          "refund_date": "2026-05-03",
+          "reason": "didn't fit"
+        },
+        {
+          "refund_id": "RFD-H-467",
+          "order_id": "ORD-68990",
+          "item": "Desk Fan",
+          "amount_usd": 42.0,
+          "refund_date": "2026-06-01",
+          "reason": "changed mind"
+        },
+        {
+          "refund_id": "RFD-H-499",
+          "order_id": "ORD-69712",
+          "item": "USB-C Hub",
+          "amount_usd": 38.0,
+          "refund_date": "2026-06-20",
+          "reason": "no longer needed"
+        }
+      ]
+    },
+    {
+      "customer_id": "CUST-1009",
+      "name": "Whitney Cho",
+      "email": "whitney.cho@example.com",
+      "loyalty_tier": "platinum",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70099",
+          "item": "Studio 4K Projector",
+          "category": "electronics",
+          "price_usd": 749.99,
+          "purchase_date": "2026-06-21",
+          "delivered_date": "2026-06-25",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1010",
+      "name": "Omar Haddad",
+      "email": "omar.haddad@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70110",
+          "item": "Espresso Grinder Pro",
+          "category": "home",
+          "price_usd": 210.0,
+          "purchase_date": "2026-06-19",
+          "delivered_date": "2026-06-23",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1011",
+      "name": "Elena Petrova",
+      "email": "elena.petrova@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70121",
+          "item": "Cashmere Scarf \u2014 gift wrapped",
+          "category": "apparel",
+          "price_usd": 75.0,
+          "purchase_date": "2026-06-15",
+          "delivered_date": "2026-06-19",
+          "delivery_status": "delivered",
+          "attributes": {
+            "gift": true,
+            "gift_recipient": "recipient of record"
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1012",
+      "name": "Marcus Webb",
+      "email": "marcus.webb@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [
+        "fraud_review"
+      ],
+      "orders": [
+        {
+          "order_id": "ORD-70132",
+          "item": "Gaming Laptop RTX",
+          "category": "electronics",
+          "price_usd": 1899.0,
+          "purchase_date": "2026-06-27",
+          "delivered_date": "2026-06-30",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": [
+        {
+          "refund_id": "RFD-H-471",
+          "order_id": "ORD-69001",
+          "item": "Smartwatch",
+          "amount_usd": 329.0,
+          "refund_date": "2026-06-05",
+          "reason": "claimed never delivered; tracking disputed"
+        },
+        {
+          "refund_id": "RFD-H-488",
+          "order_id": "ORD-69455",
+          "item": "Drone Camera",
+          "amount_usd": 449.0,
+          "refund_date": "2026-06-18",
+          "reason": "claimed box empty on arrival"
+        }
+      ]
+    },
+    {
+      "customer_id": "CUST-1013",
+      "name": "Sofia Rinaldi",
+      "email": "sofia.rinaldi@example.com",
+      "loyalty_tier": "gold",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70143",
+          "item": "FitStream+ Annual Subscription",
+          "category": "subscription",
+          "price_usd": 144.0,
+          "purchase_date": "2026-05-02",
+          "delivered_date": "2026-05-02",
+          "delivery_status": "active",
+          "attributes": {
+            "subscription": true,
+            "term_months": 12,
+            "months_used": 2
+          }
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1014",
+      "name": "Nate Kowalski",
+      "email": "nate.kowalski@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70154",
+          "item": "Standing Desk Mat",
+          "category": "home",
+          "price_usd": 44.0,
+          "purchase_date": "2026-04-28",
+          "delivered_date": "2026-05-02",
+          "delivery_status": "delivered",
+          "attributes": {}
+        },
+        {
+          "order_id": "ORD-70155",
+          "item": "Monitor Arm Duo",
+          "category": "electronics",
+          "price_usd": 96.0,
+          "purchase_date": "2026-06-28",
+          "delivered_date": "2026-07-01",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": []
+    },
+    {
+      "customer_id": "CUST-1015",
+      "name": "Dana Whitfield",
+      "email": "dana.whitfield@example.com",
+      "loyalty_tier": "standard",
+      "account_flags": [],
+      "orders": [
+        {
+          "order_id": "ORD-70166",
+          "item": "Bluetooth Speaker Mini",
+          "category": "electronics",
+          "price_usd": 39.0,
+          "purchase_date": "2026-06-10",
+          "delivered_date": "2026-06-13",
+          "delivery_status": "delivered",
+          "attributes": {}
+        }
+      ],
+      "refund_history": []
+    }
+  ]
+}
