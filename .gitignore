@@ -6,3 +6,6 @@ venv/
 node_modules/
 .next/
 .DS_Store
+
+# orchestration tool state (not part of the project)
+.omc/

@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"python3 -c \\\"\\nimport sys; sys.path.insert(0,'.')\\nfrom app.tools import validate_refund_eligibility as v, process_refund, escalate_to_manager, get_escalation_context\\n\\n# condition now cu...",
-  "error": "Exit code 1\nmaria unknown  : needs_more_info\nmaria unopened : approved_full 68.0\nomar opened    : approved_partial 178.5\nomar used      : denied\nwhitney unopened: escalated\nfinal sale     : denied\ndigital dl     : denied\ndamaged+photos : approved_full\ngary R8        : escalated\nfraud          : escalated\nsubscription   : approved_prorated\ngift           : approved_store_credit\nrefund w/o cond: POLICY_VIOLATION_BLOCKED\nrefund w/ cond : True RFD-00001\nmgr underlying : approved_full 749.99\n(eval):2...",
-  "timestamp": "2026-07-02T12:53:43.492Z",
-  "retry_count": 1
-}
