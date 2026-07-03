@@ -1,9 +1,11 @@
 "use client";
 
-// Customer-facing chat — warm, calm, human. The complexity lives in /admin.
+// Customer-facing chat — warm, calm, human. Voice is a transport layer over the
+// same Casey pipeline: mic → speech-to-text → text chat → Casey's reply → spoken
+// aloud (ElevenLabs, with a browser-voice fallback). Text works fully on its own.
 
 import { useEffect, useRef, useState } from "react";
-import { streamChat, type AgentEvent } from "@/lib/api";
+import { fetchTTS, streamChat, type AgentEvent } from "@/lib/api";
 
 type Bubble = { role: "user" | "casey" | "system"; text: string };
 
@@ -21,35 +23,88 @@ export default function CustomerChat() {
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(true);
+  const [listening, setListening] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [bubbles, busy]);
 
-  async function send() {
-    const message = input.trim();
+  // Speak text via ElevenLabs; fall back to the browser's own voice on failure.
+  async function speak(text: string) {
+    const blob = await fetchTTS(text);
+    if (blob) {
+      const url = URL.createObjectURL(blob);
+      audioRef.current?.pause();
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => URL.revokeObjectURL(url);
+      try {
+        await audio.play();
+        return;
+      } catch {
+        /* autoplay blocked — fall through to browser voice */
+      }
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+    }
+  }
+
+  async function send(override?: string) {
+    const message = (override ?? input).trim();
     if (!message || busy) return;
     setInput("");
     setBusy(true);
     setBubbles((b) => [...b, { role: "user", text: message }]);
+    const caseyParts: string[] = [];
     try {
       await streamChat(sessionId, message, (e: AgentEvent) => {
         if (e.type === "agent_text" && e.agent === "casey" && e.text) {
           setBubbles((b) => [...b, { role: "casey", text: e.text! }]);
+          caseyParts.push(e.text!);
         }
       });
+      if (voiceOn && caseyParts.length) speak(caseyParts.join(" "));
     } catch {
       setBubbles((b) => [
         ...b,
-        {
-          role: "system",
-          text: "Connection hiccup — is the backend running on :8100?",
-        },
+        { role: "system", text: "Connection hiccup — is the backend running on :8100?" },
       ]);
     } finally {
       setBusy(false);
     }
+  }
+
+  function startListening() {
+    const SR =
+      (window as unknown as { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown })
+        .SpeechRecognition ||
+      (window as unknown as { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;
+    if (!SR) {
+      setBubbles((b) => [
+        ...b,
+        { role: "system", text: "Voice input needs Chrome — you can still type." },
+      ]);
+      return;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rec: any = new (SR as any)();
+    rec.lang = "en-US";
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    setListening(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rec.onresult = (e: any) => {
+      const text = e.results?.[0]?.[0]?.transcript ?? "";
+      setListening(false);
+      if (text) send(text);
+    };
+    rec.onerror = () => setListening(false);
+    rec.onend = () => setListening(false);
+    rec.start();
   }
 
   return (
@@ -69,12 +124,22 @@ export default function CustomerChat() {
               </div>
             </div>
           </div>
-          <a
-            href="/admin"
-            className="text-xs text-[#8a8272] hover:text-[#1d1a13] underline underline-offset-4"
-          >
-            ops console →
-          </a>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setVoiceOn((v) => !v)}
+              title={voiceOn ? "Casey's voice is on" : "Casey's voice is off"}
+              className="text-xs text-[#8a8272] hover:text-[#1d1a13] flex items-center gap-1.5"
+            >
+              <span>{voiceOn ? "🔊" : "🔇"}</span>
+              <span className="hidden sm:inline">voice {voiceOn ? "on" : "off"}</span>
+            </button>
+            <a
+              href="/admin"
+              className="text-xs text-[#8a8272] hover:text-[#1d1a13] underline underline-offset-4"
+            >
+              ops console →
+            </a>
+          </div>
         </div>
       </header>
 
@@ -122,16 +187,28 @@ export default function CustomerChat() {
       <footer className="border-t border-[#e8e0cf] bg-[#faf6ee]">
         <div className="max-w-2xl mx-auto px-5 py-4 w-full">
           <div className="flex gap-2">
+            <button
+              onClick={startListening}
+              disabled={busy || listening}
+              title="Speak to Casey"
+              className={`shrink-0 rounded-full h-12 w-12 grid place-items-center border transition ${
+                listening
+                  ? "bg-[#d83a24] text-white border-[#d83a24] animate-pulse"
+                  : "bg-white text-[#1d1a13] border-[#e0d7c2] hover:border-[#1d1a13]"
+              } disabled:opacity-40`}
+            >
+              {listening ? "●" : "🎙"}
+            </button>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Describe your refund request…"
+              placeholder={listening ? "Listening…" : "Describe your refund request…"}
               disabled={busy}
               className="flex-1 rounded-full border border-[#e0d7c2] bg-white px-5 py-3 text-[15px] outline-none focus:border-[#1d1a13] disabled:opacity-60"
             />
             <button
-              onClick={send}
+              onClick={() => send()}
               disabled={busy || !input.trim()}
               className="rounded-full bg-[#1d1a13] text-[#faf6ee] px-6 py-3 text-sm font-medium disabled:opacity-40 hover:opacity-90 transition"
             >

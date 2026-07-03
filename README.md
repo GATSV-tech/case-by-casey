@@ -34,6 +34,9 @@ and completely immovable at the same time.
 - **Live reasoning console** — an ops dashboard streams both agents' reasoning,
   tool calls, and guardrail blocks in real time, alongside the CRM directory,
   escalation queue, and refunds ledger.
+- **Voice (bonus)** — the customer can *speak* to Casey (browser speech-to-text)
+  and hear her replies (ElevenLabs), layered as pure I/O over the same agent —
+  every policy rule and guardrail applies identically whether you type or talk.
 
 ---
 
@@ -111,6 +114,7 @@ established by asking the customer, never read from the database.
 
 - **Backend** — Python · FastAPI · Anthropic SDK (raw function calling) · SSE streaming
 - **Frontend** — Next.js (App Router) · TypeScript · Tailwind
+- **Voice** — browser Web Speech API (speech-to-text) · ElevenLabs (text-to-speech), with a browser-voice fallback
 - **Model** — `claude-sonnet-5`, with prompt caching on the policy document
 
 ---
@@ -122,7 +126,8 @@ established by asking the customer, never read from the database.
 cd backend
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env          # add your ANTHROPIC_API_KEY
+cp .env.example .env          # ANTHROPIC_API_KEY (required)
+                              # ELEVENLABS_API_KEY enables voice (optional — falls back to browser voice)
 uvicorn app.main:app --port 8100
 ```
 
@@ -187,8 +192,6 @@ frontend/
 
 ## What I'd build next
 
-- **Voice** — an OpenAI Realtime / ElevenLabs pipeline on the customer side (the
-  tool layer is already voice-ready; it's a UI + transport add).
 - **Durable state** — the ledgers are in-memory for the slice; swap for Postgres.
 - **Eval harness** — turn the 15-scenario regression into a graded suite with
   adversarial "jailbreak the refund" cases scored automatically.

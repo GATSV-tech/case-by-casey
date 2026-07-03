@@ -12,11 +12,13 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from typing import AsyncIterator
 
+import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel
 
 from .agent import SESSIONS, run_agent_turn, run_manager_review
@@ -166,6 +168,34 @@ def customers() -> dict:
             for c in _DB.values()
         ]
     }
+
+
+class TTSRequest(BaseModel):
+    text: str
+
+
+@app.post("/api/tts")
+async def tts(req: TTSRequest) -> Response:
+    """Text-to-speech via ElevenLabs. Returns audio/mpeg, or a JSON error with a
+    non-200 status so the frontend can fall back to the browser's own voice."""
+    key = os.getenv("ELEVENLABS_API_KEY")
+    if not key:
+        return JSONResponse({"error": "tts_unconfigured"}, status_code=503)
+    voice = os.getenv("CASEY_VOICE_ID", "EXAVITQu4vr4xnSDxMaL")
+    try:
+        async with httpx.AsyncClient(timeout=30) as client:
+            r = await client.post(
+                f"https://api.elevenlabs.io/v1/text-to-speech/{voice}",
+                headers={"xi-api-key": key, "Content-Type": "application/json"},
+                json={"text": req.text, "model_id": "eleven_turbo_v2_5"},
+            )
+    except httpx.HTTPError as e:
+        return JSONResponse({"error": "tts_request_failed", "detail": str(e)},
+                            status_code=502)
+    if r.status_code != 200:
+        return JSONResponse({"error": "tts_failed", "detail": r.text},
+                            status_code=r.status_code)
+    return Response(content=r.content, media_type="audio/mpeg")
 
 
 @app.get("/api/health")

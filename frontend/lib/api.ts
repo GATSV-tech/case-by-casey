@@ -124,3 +124,20 @@ export async function getCustomers(): Promise<CrmCustomer[]> {
   const data = await res.json();
   return data.customers;
 }
+
+/** Fetch spoken audio for text (ElevenLabs, server-side). null on any failure
+ *  so the caller can fall back to the browser's built-in voice. */
+export async function fetchTTS(text: string): Promise<Blob | null> {
+  try {
+    const res = await fetch(`${API_BASE}/api/tts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return blob.type.startsWith("audio") ? blob : null;
+  } catch {
+    return null;
+  }
+}
